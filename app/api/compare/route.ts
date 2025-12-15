@@ -3,7 +3,7 @@ import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 
 const gateway = createOpenAI({
-  apiKey: process.env.VERCEL_AI_GATEWAY_API_KEY!,
+  apiKey: process.env.AI_GATEWAY_API_KEY!,
   baseURL: "https://gateway.ai.vercel.com/v1",
 });
 
@@ -19,12 +19,12 @@ export async function POST(req: Request) {
     }
 
     const modelA = await generateText({
-      model: gateway("openai/gpt-4o-mini"),
+      model: gateway("gpt-4o-mini"),
       prompt,
     });
 
     const modelB = await generateText({
-      model: gateway("openai/gpt-4.1-mini"),
+      model: gateway("gpt-4o"),
       prompt,
     });
 
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("API ERROR:", error);
     return NextResponse.json(
-      { error: "AI comparison failed" },
+      { error: error.message ?? "Internal server error" },
       { status: 500 }
     );
   }
