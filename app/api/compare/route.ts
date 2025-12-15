@@ -9,9 +9,10 @@ const gateway = createOpenAI({
 
 export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
+    const body = await req.json();
+    const prompt = body?.prompt;
 
-    if (!prompt) {
+    if (!prompt || typeof prompt !== "string") {
       return NextResponse.json(
         { error: "Prompt is required" },
         { status: 400 }
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
     });
 
     const modelB = await generateText({
-      model: gateway("gpt-4o"),
+      model: gateway("gpt-4.1-mini"),
       prompt,
     });
 
@@ -32,10 +33,10 @@ export async function POST(req: Request) {
       modelA: modelA.text,
       modelB: modelB.text,
     });
-  } catch (error: any) {
-    console.error("API ERROR:", error);
+  } catch (err) {
+    console.error("COMPARE API ERROR:", err);
     return NextResponse.json(
-      { error: error.message ?? "Internal server error" },
+      { error: "AI Gateway call failed" },
       { status: 500 }
     );
   }
