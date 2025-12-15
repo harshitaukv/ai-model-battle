@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6ff;
+  text-align: center;
+  padding: 40px;
+}
+
+textarea {
+  width: 60%;
+  height: 80px;
+}
+
+button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.grid div {
+  width: 40%;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
